@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title><!-- th:text="#{order.title}" -->BookHaven - Confirmation de Commande</title>
+    <th:block th:replace="~{fragments/header :: header}"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5 pt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h1 class="text-center mb-4"><!-- th:text="#{order.title}" -->Confirmation de Commande</h1>
+                    <p class="text-center"><!-- th:text="#{order.thank.you}" -->Merci pour votre commande !</p>
+                    <h3><!-- th:text="#{order.details}" -->Détails de la Commande</h3>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th><!-- th:text="#{cart.table.title}" -->Titre</th>
+                                <th><!-- th:text="#{cart.table.author}" -->Auteur</th>
+                                <th><!-- th:text="#{cart.table.quantity}" -->Quantité</th>
+                                <th><!-- th:text="#{cart.table.price}" -->Prix</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="item : ${orderedItems}">
+                                <td><!-- th:text="${item[0].title}" -->[Titre du livre]</td>
+                                <td><!-- th:text="${item[0].author}" -->[Auteur]</td>
+                                <td><!-- th:text="${item[1]}" -->[Quantité]</td>
+                                <td><!-- th:text="${item[0].price * item[1]} + ' €'" -->[Prix total] €</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h4><!-- th:text="#{order.total} + ': ' + ${order.total} + ' €' "-->Total : [Montant total] €</h4>
+                    <p><!-- th:text="#{order.date} + ': ' + ${order.orderDate}" -->Date de Commande : [Date]</p>
+                    <p><!-- th:text="#{order.shipping.address} + ': ' + ${order.shippingAddress}" -->Adresse de Livraison : [Adresse]</p>
+                    <div class="text-center">
+                        <a th:href="@{/books}" class="btn btn-primary"><!-- th:text="#{order.continue.shopping}" -->
+                            <i class="fas fa-book me-2"></i> Continuer les Achats
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<th:block th:replace="~{fragments/footer :: footer}"/>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/script.js"></script>
+</body>
+</html>

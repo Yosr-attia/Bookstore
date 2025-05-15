@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:replace="~{fragments/header :: header}">
+    <title th:replace="~{::title}">BookHaven</title>
+</head>
+<body>
+<th:replace="~{fragments/header :: navbar}">
+<main>
+    <th:insert="~{::main}"></th:insert>
+</main>
+<th:replace="~{fragments/footer :: footer}">
+</body>
+</html>

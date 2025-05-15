@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{cart.title}">BookHaven - Cart</title>
+    <th:block th:replace="~{fragments/header :: header}"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5 pt-5">
+    <h1 class="text-center mb-4" th:text="#{cart.title}">Your Cart</h1>
+    <div th:if="${not #lists.isEmpty(cartItems)}">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th th:text="#{cart.table.image}">Image</th>
+                    <th th:text="#{cart.table.title}">Title</th>
+                    <th th:text="#{cart.table.author}">Author</th>
+                    <th th:text="#{cart.table.price}">Price</th>
+                    <th th:text="#{cart.table.quantity}">Quantity</th>
+                    <th th:text="#{cart.table.total}">Total</th>
+                    <th th:text="#{cart.table.action}">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="item : ${cartItems}">
+                    <td><img th:src="${item[0].imageUrl}" alt="Book cover" style="width: 50px; height: 50px; object-fit: cover;"></td>
+                    <td><a th:href="@{/book/{id}(id=${item[0].id})}" th:text="${item[0].title}"></a></td>
+                    <td th:text="${item[0].author}"></td>
+                    <td th:text="${item[0].price} + ' €'"></td>
+                    <td>
+                        <form th:action="@{/cart/update}" method="post">
+                            <input type="hidden" name="literatureId" th:value="${item[0].id}">
+                            <input type="number" name="quantity" class="form-control d-inline-block w-auto"
+                                   th:value="${item[1]}" min="1" th:max="${item[0].quantity}" required>
+                            <button type="submit" class="btn btn-sm btn-outline-primary" th:text="#{cart.update}">
+                                <i class="fas fa-sync me-2"></i> Update
+                            </button>
+                        </form>
+                    </td>
+                    <td th:text="${item[0].price * item[1]} + ' €'"></td>
+                    <td>
+                        <form th:action="@{/cart/remove}" method="post">
+                            <input type="hidden" name="literatureId" th:value="${item[0].id}">
+                            <button type="submit" class="btn btn-danger btn-sm" th:text="#{cart.remove}">
+                                <i class="fas fa-trash me-2"></i> Remove
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <h3 class="text-end" th:text="#{cart.total} + ': ' + ${total} + ' €'">Total</h3>
+        <div class="text-end">
+            <a th:href="@{/checkout}" class="btn btn-primary" th:text="#{cart.proceed.to.checkout}">
+                <i class="fas fa-credit-card me-2"></i> Proceed to Checkout
+            </a>
+        </div>
+    </div>
+    <p th:if="${#lists.isEmpty(cartItems)}" class="text-center" th:text="#{cart.empty}">Your cart is empty.</p>
+</div>
+<th:block th:replace="~{fragments/footer :: footer}"/>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/script.js"></script>
+</body>
+</html>

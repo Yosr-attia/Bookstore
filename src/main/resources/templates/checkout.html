@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{checkout.title}">BookHaven - Checkout</title>
+    <th:block th:replace="~{fragments/header :: header}"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5 pt-5">
+    <h1 class="text-center mb-4" th:text="#{checkout.title}">Checkout</h1>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h3 th:text="#{checkout.payment.details}">Payment Details</h3>
+                    <form th:action="@{/order}" th:object="${paymentDetails}" method="post">
+                        <div class="mb-3">
+                            <label for="cardHolderName" class="form-label" th:text="#{checkout.card.holder}">Card Holder Name</label>
+                            <input type="text" class="form-control" id="cardHolderName" th:field="*{cardHolderName}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="cardNumber" class="form-label" th:text="#{checkout.card.number}">Card Number</label>
+                            <input type="text" class="form-control" id="cardNumber" th:field="*{cardNumber}" pattern="\d{16}" required>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="expiryDate" class="form-label" th:text="#{checkout.expiry.date}">Expiry Date</label>
+                                <input type="text" class="form-control" id="expiryDate" th:field="*{expiryDate}" pattern="\d{2}/\d{2}" placeholder="MM/YY" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="cvv" class="form-label" th:text="#{checkout.cvv}">CVV</label>
+                                <input type="text" class="form-control" id="cvv" th:field="*{cvv}" pattern="\d{3}" required>
+                            </div>
+                        </div>
+                        <h3 th:text="#{checkout.shipping.address}">Shipping Address</h3>
+                        <div class="mb-3">
+                            <label for="shippingAddress" class="form-label" th:text="#{checkout.address}">Address</label>
+                            <textarea class="form-control" id="shippingAddress" th:field="${order.shippingAddress}" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100" th:text="#{checkout.submit}">
+                            <i class="fas fa-check me-2"></i> Confirm Payment
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h3 th:text="#{checkout.order.summary}">Order Summary</h3>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th th:text="#{cart.table.title}">Title</th>
+                                <th th:text="#{cart.table.quantity}">Quantity</th>
+                                <th th:text="#{cart.table.price}">Price</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="item : ${cartItems}">
+                                <td th:text="${item[0].title}"></td>
+                                <td th:text="${item[1]}"></td>
+                                <td th:text="${item[0].price * item[1]} + ' DT'"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h4 class="text-end" th:text="#{cart.total} + ': ' + ${total} + ' DT'">Total</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<th:block th:replace="~{fragments/footer :: footer}"/>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="#{home.title}">LitHaven - Home</title>
+  <th:block th:replace="~{fragments/header :: header}"/>
+</head>
+<body>
+<div class="container mt-5 pt-5">
+  <div id="categoryCarousel" class="carousel slide mb-5" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="https://images.unsplash.com/photo-1516979187457-6379e7e2d285" class="d-block w-100" alt="Fiction" style="height: 400px; object-fit: cover;">
+        <div class="carousel-caption d-none d-md-block">
+          <h5 th:text="#{home.carousel.fiction}">Fiction</h5>
+          <p th:text="#{home.carousel.fiction.desc}">Discover captivating stories and novels.</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="https://images.unsplash.com/photo-1457369804613-52c61a468e7d" class="d-block w-100" alt="Non-Fiction" style="height: 400px; object-fit: cover;">
+        <div class="carousel-caption d-none d-md-block">
+          <h5 th:text="#{home.carousel.nonfiction}">Non-Fiction</h5>
+          <p th:text="#{home.carousel.nonfiction.desc}">Explore knowledge and real-world insights.</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="https://images.unsplash.com/photo-1476275466078-400737514105" class="d-block w-100" alt="Fantasy" style="height: 400px; object-fit: cover;">
+        <div class="carousel-caption d-none d-md-block">
+          <h5>Fantasy</h5>
+          <p>Embark on magical adventures.</p>
+        </div>
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#categoryCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#categoryCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+  <h1 class="text-center mb-4" th:text="#{home.title}">Welcome to LitHaven</h1>
+  <p class="text-center mb-5" th:text="#{home.subtitle}">Discover our curated collection of books.</p>
+  <div class="row">
+    <div class="col-md-4" th:each="lit : ${literatureList}">
+      <div class="card mb-4 shadow-sm">
+        <img th:src="${lit.imageUrl}" class="card-img-top" alt="Book cover" style="height: 200px; object-fit: cover;">
+        <div class="card-body">
+          <h5 class="card-title" th:text="${lit.title}"></h5>
+          <p class="card-text" th:text="${lit.author}"></p>
+          <p class="card-text" th:text="${lit.price} + ' €'"></p>
+          <p class="card-text" th:class="${lit.quantity > 0} ? 'text-success' : 'text-danger'"
+             th:text="${lit.quantity > 0} ? #{book.quantity.available} + ': ' + ${lit.quantity} : #{book.quantity.out.of.stock}">
+          </p>
+          <a th:href="@{/book/{id}(id=${lit.id})}" class="btn btn-outline-primary mb-2 w-100" th:text="#{book.detail.view}">View Details</a>
+          <form th:action="@{/cart/add}" method="post" th:if="${lit.quantity > 0}">
+            <input type="hidden" name="literatureId" th:value="${lit.id}">
+            <div class="input-group mb-2">
+              <label>
+                <input type="number" name="quantity" class="form-control" min="1" th:max="${lit.quantity}" value="1" required>
+              </label>
+              <button type="submit" class="btn btn-primary" th:text="#{books.add.to.cart}">
+                <i class="fas fa-cart-plus me-2"></i> Add
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<th:block th:replace="~{fragments/footer :: footer}"/>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/script.js"></script>
+</body>
+</html>
