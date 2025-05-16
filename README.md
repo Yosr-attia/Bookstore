@@ -2,7 +2,7 @@
 
 ## Description
 
-BookHaven est une application web de librairie en ligne développée pour le TP4 GRP2. Elle permet aux utilisateurs de s'inscrire, se connecter, parcourir un catalogue de livres avec des visuels de haute qualité, consulter les détails de chaque livre, gérer un panier avec quantités, saisir des coordonnées de paiement, et recevoir une confirmation d'achat. Les administrateurs peuvent gérer le stock via un espace dédié.
+BookHaven est une application web de librairie en ligne. Elle permet aux utilisateurs de s'inscrire, se connecter, parcourir un catalogue de livres avec des visuels de haute qualité, consulter les détails de chaque livre, gérer un panier avec quantités, saisir des coordonnées de paiement, et recevoir une confirmation d'achat. Les administrateurs peuvent gérer le stock via un espace dédié.
 
 ## Technologies
 
