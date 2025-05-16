@@ -1,4 +1,4 @@
-# BookHaven - TP4 GRP2: Mini Bookstore avec Spring Boot
+# BookHaven: Mini Bookstore avec Spring Boot
 
 ## Description
 
